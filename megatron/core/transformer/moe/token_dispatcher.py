@@ -608,13 +608,6 @@ class MoEAlltoAllTokenDispatcher(MoETokenDispatcher):
             drop_and_pad=self.drop_and_pad,
         )
 
-        # Debug logging for router replay investigation
-        print(f"[DEBUG DISPATCH] hidden_states.shape: {self.hidden_shape}")
-        print(f"[DEBUG DISPATCH] routing_map.shape: {self.routing_map.shape}, sum: {self.routing_map.sum().item()}")
-        input_splits_sum = self.input_splits.sum().item() if hasattr(self.input_splits, 'sum') else sum(self.input_splits) if self.input_splits is not None else 'None'
-        print(f"[DEBUG DISPATCH] input_splits: {self.input_splits}, sum: {input_splits_sum}")
-        print(f"[DEBUG DISPATCH] permuted_output.shape: {permutated_local_input_tokens.shape}")
-
         return permutated_local_input_tokens, permuted_probs
 
     def token_dispatch(self, permutated_local_input_tokens, permuted_probs):
